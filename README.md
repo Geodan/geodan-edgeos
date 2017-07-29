@@ -8,10 +8,10 @@ Clone the repository somewhere
 copy script to Edge router  
 `scp geodan-edgeos/scriptname user@router-ip-or-hostname:`
 
-Logon on to the router and make script executable  
+Logon to the router and make script executable  
 `chmod +x scriptname`
 
-Run the script  
+Run the script on the router  
 `./scriptname`
 
 ## Scripts
