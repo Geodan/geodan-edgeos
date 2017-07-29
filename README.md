@@ -1,6 +1,8 @@
 # geodan-edgeos
 EdgeOS scripts and utilities for EdgeMAX routers
 
+NOTE: THIS IS NOT OFFICIAL UBIQUITI SOFTWARE AND THEREFORE NOT SUPPORTED OR ENDORSED BY Ubiquiti Networks®
+
 ## Install
 Clone the repository somewhere  
 `git clone https://github.com/Geodan/geodan-edgeos`
