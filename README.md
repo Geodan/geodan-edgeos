@@ -34,3 +34,9 @@ usage:
 `updateaddressgroup groupname inputfile`  
 where 'groupname' is the name of an existing firewall address-group (if necessary, create an address-group, for example using the GUI)
 and 'inputfile' is the name of the file containing ip-addresses
+
+## Links
+About managing a commented whitelist: https://community.ubnt.com/t5/EdgeMAX/Manage-whitelist-of-100-changing-ip-addresses/m-p/2008860#M169949  
+About loading spamhaus blacklisted networks using ipset: https://community.ubnt.com/t5/EdgeMAX/Using-spamhaus-lists/td-p/578909
+
+
