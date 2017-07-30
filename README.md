@@ -4,10 +4,13 @@ EdgeOS scripts and utilities for EdgeMAX routers
 NOTE: THIS IS NOT OFFICIAL UBIQUITI SOFTWARE AND THEREFORE NOT SUPPORTED OR ENDORSED BY Ubiquiti Networks®
 
 ## Install
-Clone the repository somewhere  
+If the router has internet access (replace 'scriptname' by the name of the required script):  
+`curl -k -o scriptname https://raw.githubusercontent.com/Geodan/geodan-edgeos/master/scriptname`
+
+else clone the repository somewhere  
 `git clone https://github.com/Geodan/geodan-edgeos`
 
-copy script to Edge router  
+and copy the script to the Edge router  
 `scp geodan-edgeos/scriptname user@router-ip-or-hostname:`
 
 Logon to the router and make script executable  
