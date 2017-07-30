@@ -36,7 +36,7 @@ function cleanup
 
 #get all ipnumbers currently in firewall address-group
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show firewall group address-group $groupname | grep -Eo "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])" | sort | uniq > $currentlist
-if [ `wc -l $currentlist | cut -d " " -f 1` -eq 0 ]; then
+if [ `wc -l < $currentlist` -eq 0 ]; then
   if /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show firewall group address-group $groupname | grep -q "empty"; then
     echo address-group $groupname does not exist, create it first
     cleanup 1
@@ -47,7 +47,7 @@ fi
 sed 's/[[:space:]]*#.*//;/^[[:space:]]*$/d' $inputfile | grep -Eo "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])" | sort | uniq > $newlist
 
 #to prevent accidental removal, inputfile must contain at least 1 ipv4
-if [ `wc -l $newlist | cut -d " " -f 1` -eq 0 ]; then
+if [ `wc -l < $newlist` -eq 0 ]; then
   echo File \'$inputfile\' does not contain any ip numbers.
   echo To prevent accidental removal of all ips by using wrong input files,
   echo the input file should contain at least 1 ip number.
@@ -59,17 +59,17 @@ echo PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin > $script
 echo /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin >> $scriptfile
 #remove ips from firewall address-group that are not in inputfile
 diff $currentlist $newlist | grep "^-[0-9]" | cut -d "-" -f 2 | xargs -r -n 1 echo /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete firewall group address-group $groupname address >> $scriptfile
-count=`wc -l $scriptfile | cut -d " " -f 1`
+count=`wc -l < $scriptfile`
 deletecount=`expr $count - 2`
 #add ips to firewall address-group that are only in inputfile
 diff $currentlist $newlist | grep "^+[0-9]" | cut -d "+" -f 2 | xargs -r -n 1 echo /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall group address-group $groupname address >> $scriptfile
-count=`wc -l $scriptfile | cut -d " " -f 1`
+count=`wc -l < $scriptfile`
 addcount=`expr $count - $deletecount - 2`
 echo /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit >> $scriptfile
 echo /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end >> $scriptfile
 
 #skip unnecessary commit if nothing changed
-if [ `wc -l $scriptfile | cut -d " " -f 1` -gt 4 ]; then
+if [ `wc -l < $scriptfile` -gt 4 ]; then
   chmod +x $scriptfile
   echo updating...
   $scriptfile
