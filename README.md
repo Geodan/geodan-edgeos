@@ -28,7 +28,7 @@ Mark 1.2.3.4 #temporary!
 Mary 5.6.7.8 # used to be 5.6.7.7, comments are ignored
 127.0.0.1 localhost
 # the next lines are special
-Me 8.8.8.8
+Google DNS 8.8.8.8 8.8.4.4
 ``` 
 usage:  
 `updateaddressgroup groupname inputfile`  
