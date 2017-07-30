@@ -6,7 +6,7 @@ if [ $# -ne 2 ]; then
   echo ""
   echo filters all uncommented ipv4 numbers from inputfile and updates firewall address group identified by groupname
   echo ""
-  exit
+  exit 1
 fi
 
 groupname=$1
@@ -14,7 +14,7 @@ inputfile=$2
 
 if [ ! -f $inputfile ]; then
   echo inputfile "$inputfile" does not exist!
-  exit
+  exit 1
 fi
 
 scriptfile=`mktemp`
@@ -26,7 +26,7 @@ function cleanup
   rm $scriptfile
   rm $currentlist
   rm $newlist
-  exit
+  exit $1
 }
 
 #debug
@@ -39,7 +39,7 @@ function cleanup
 if [ `wc -l $currentlist | cut -d " " -f 1` -eq 0 ]; then
   if /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show firewall group address-group $groupname | grep -q "empty"; then
     echo address-group $groupname does not exist, create it first
-    cleanup
+    cleanup 1
   fi
 fi
 
@@ -51,7 +51,7 @@ if [ `wc -l $newlist | cut -d " " -f 1` -eq 0 ]; then
   echo File \'$inputfile\' does not contain any ip numbers.
   echo To prevent accidental removal of all ips by using wrong input files,
   echo the input file should contain at least 1 ip number.
-  cleanup
+  cleanup 1
 fi
 
 #create temporary scriptfile, workaround for https://community.ubnt.com/t5/EdgeMAX/EdgeMAX-API-calling-validateSetPath-without-config-session/td-p/1165956
@@ -79,4 +79,4 @@ else
   echo nothing changed
 fi
 
-cleanup
+cleanup 0
