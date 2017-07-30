@@ -22,7 +22,7 @@ Run the script on the router
 ## Scripts
 **updateaddressgroup**  
 This script reads ip numbers from a free formatted input file and updates the specified firewall address-group by removing ip numbers that do not exist 
-in the input file and adding ip numbers that do not exist in the address-group. For instance, the input file can look like something like this (max 1 uncommented ip-number per line):  
+in the input file and adding ip numbers that do not exist in the address-group. For instance, the input file can look like something like this:  
 ```
 Mark 1.2.3.4 #temporary!
 Mary 5.6.7.8 # used to be 5.6.7.7, comments are ignored
